@@ -754,7 +754,7 @@ class AgenticPostTradeTriageStack(Stack):
                             "ModelConfig": {
                                 "BedrockEvaluatorModelConfig": {
                                     "ModelId": evaluator_model_id,
-                                    "InferenceConfig": {"MaxTokens": 512, "Temperature": 0.0},
+                                    "InferenceConfig": {"MaxTokens": 512},
                                 }
                             },
                             "RatingScale": {

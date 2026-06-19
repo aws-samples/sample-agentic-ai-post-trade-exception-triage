@@ -23,10 +23,16 @@ export AWS_REGION=us-east-1
 export BEDROCK_MODEL_ID=us.anthropic.claude-opus-4-6-v1
 ```
 
-`BEDROCK_EVALUATOR_MODEL_ID` is optional and controls the AgentCore Evaluator's LLM-as-judge model. It defaults to the lower-cost judge model used in current AgentCore Evaluations examples:
+`BEDROCK_EVALUATOR_MODEL_ID` is optional and controls the AgentCore Evaluator's LLM-as-judge model. It is separate from BEDROCK_MODEL_ID; do not reuse the Runtime model as the evaluator model. AgentCore Evaluator validates model-specific inference parameters during resource creation, and newer models can reject parameters that older models accepted.
+
+For this sample, use Claude Haiku 4.5 as the evaluator model:
 
 ```bash
+# US Regions
 export BEDROCK_EVALUATOR_MODEL_ID=us.anthropic.claude-haiku-4-5-20251001-v1:0
+
+# EU Regions, for example eu-west-2
+export BEDROCK_EVALUATOR_MODEL_ID=eu.anthropic.claude-haiku-4-5-20251001-v1:0
 ```
 
 If you use a named profile, set `AWS_PROFILE=<your-profile>` before running the scripts. Otherwise, the scripts use the default AWS credential chain.
