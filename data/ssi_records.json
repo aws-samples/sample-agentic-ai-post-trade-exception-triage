@@ -1,0 +1,7 @@
+[
+  {"counterparty_id":"CP-SYN-4421","account_id":"ACCT-SYN-8812","ssi_status":"MISSING","custodian":"SYNTHETIC_CUSTODIAN_A","last_verified":"2026-03-10T10:00:00Z","source_id":"ssi_record:CP-SYN-4421"},
+  {"counterparty_id":"CP-SYN-4422","account_id":"ACCT-SYN-8813","ssi_status":"ACTIVE","custodian":"SYNTHETIC_CUSTODIAN_B","last_verified":"2026-04-19T10:00:00Z","source_id":"ssi_record:CP-SYN-4422"},
+  {"counterparty_id":"CP-SYN-4423","account_id":"ACCT-SYN-8814","ssi_status":"ACTIVE","custodian":"SYNTHETIC_CUSTODIAN_C","last_verified":"2026-04-20T10:00:00Z","source_id":"ssi_record:CP-SYN-4423"},
+  {"counterparty_id":"CP-SYN-4426","account_id":"ACCT-SYN-8818","ssi_status":"STALE","custodian":"SYNTHETIC_CUSTODIAN_D","last_verified":"2026-02-01T10:00:00Z","source_id":"ssi_record:CP-SYN-4426"},
+  {"counterparty_id":"CP-SYN-4427","account_id":"ACCT-SYN-8819","ssi_status":"ACTIVE_STALE_REFERENCE","custodian":"SYNTHETIC_CUSTODIAN_E","last_verified":"2026-01-15T10:00:00Z","source_id":"ssi_record:CP-SYN-4427"}
+]

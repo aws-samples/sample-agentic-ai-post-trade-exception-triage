@@ -1,0 +1,36 @@
+name: ci
+
+permissions:
+  contents: read
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+      - name: Unit tests
+        run: DISABLE_STRANDS_MODEL_CALL=1 pytest
+      - name: Python vulnerability audit
+        run: pip-audit -r requirements.txt -r requirements.runtime.txt -r requirements.streaming.txt
+      - name: CDK synth
+        run: npx --yes aws-cdk@2.1123.0 synth -c account=111122223333 -c region=us-east-1
+      - name: Frontend build
+        run: npm --prefix frontend ci && npm --prefix frontend run build
+      - name: Frontend vulnerability audit
+        run: npm --prefix frontend audit --audit-level=moderate
+      - name: Shellcheck guidance
+        run: |
+          echo "Install shellcheck locally and run: shellcheck scripts/*.sh"

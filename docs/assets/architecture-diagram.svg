@@ -1,0 +1,271 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1180" viewBox="0 0 1800 1180" role="img" aria-labelledby="title desc">
+  <title id="title">Agentic post-trade exception triage architecture</title>
+  <desc id="desc">Architecture diagram for a synthetic post-trade exception triage sample using CloudFront, API Gateway, Step Functions, Lambda, Amazon Bedrock AgentCore Runtime, AgentCore Gateway, AgentCore Policy, DynamoDB, S3, CloudWatch, and AgentCore Evaluator.</desc>
+  <defs>
+    <marker id="arrow-control" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#d86613"/>
+    </marker>
+    <marker id="arrow-evidence" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#117a8b"/>
+    </marker>
+    <marker id="arrow-stream" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#2f7d32"/>
+    </marker>
+    <marker id="arrow-telemetry" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#6b7280"/>
+    </marker>
+    <filter id="shadow" x="-8%" y="-8%" width="116%" height="120%">
+      <feDropShadow dx="0" dy="5" stdDeviation="6" flood-color="#0f172a" flood-opacity="0.12"/>
+    </filter>
+    <linearGradient id="header" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0%" stop-color="#232f3e"/>
+      <stop offset="48%" stop-color="#25465f"/>
+      <stop offset="100%" stop-color="#0f766e"/>
+    </linearGradient>
+  </defs>
+  <style>
+    .bg { fill: #f7f9fb; }
+    .title { font: 700 35px Arial, Helvetica, sans-serif; fill: #ffffff; }
+    .subtitle { font: 400 17px Arial, Helvetica, sans-serif; fill: #e5edf4; }
+    .legend { font: 600 13px Arial, Helvetica, sans-serif; fill: #334155; }
+    .cluster { fill: #ffffff; stroke: #d7dee8; stroke-width: 1.4; filter: url(#shadow); }
+    .clusterTitle { font: 700 18px Arial, Helvetica, sans-serif; fill: #172033; }
+    .clusterNote { font: 400 13px Arial, Helvetica, sans-serif; fill: #536273; }
+    .svc { fill: #fbfdff; stroke: #b9c7d6; stroke-width: 1.2; }
+    .svcDark { fill: #eef6ff; stroke: #85a9cc; stroke-width: 1.2; }
+    .svcGreen { fill: #eef9f5; stroke: #78b7a3; stroke-width: 1.2; }
+    .svcOrange { fill: #fff6ed; stroke: #e7a563; stroke-width: 1.2; }
+    .svcPurple { fill: #f6f2ff; stroke: #b6a3df; stroke-width: 1.2; }
+    .svcGray { fill: #f8fafc; stroke: #cbd5e1; stroke-width: 1.2; }
+    .svcTitle { font: 700 15px Arial, Helvetica, sans-serif; fill: #182235; }
+    .svcText { font: 400 12.5px Arial, Helvetica, sans-serif; fill: #475569; }
+    .smallTitle { font: 700 13px Arial, Helvetica, sans-serif; fill: #172033; }
+    .tiny { font: 400 11.5px Arial, Helvetica, sans-serif; fill: #475569; }
+    .pill { fill: #ffffff; stroke: #cbd5e1; stroke-width: 1; }
+    .pillText { font: 700 11.5px Arial, Helvetica, sans-serif; fill: #334155; }
+    .callout { fill: #fffdf7; stroke: #f0c56b; stroke-width: 1.2; }
+    .control { fill: none; stroke: #d86613; stroke-width: 2.4; marker-end: url(#arrow-control); }
+    .evidence { fill: none; stroke: #117a8b; stroke-width: 2.4; marker-end: url(#arrow-evidence); }
+    .stream { fill: none; stroke: #2f7d32; stroke-width: 2.1; stroke-dasharray: 8 7; marker-end: url(#arrow-stream); }
+    .telemetry { fill: none; stroke: #6b7280; stroke-width: 1.9; stroke-dasharray: 6 7; marker-end: url(#arrow-telemetry); }
+    .labelBg { fill: #f7f9fb; stroke: #e5e7eb; stroke-width: 1; }
+    .arrowLabel { font: 700 11px Arial, Helvetica, sans-serif; fill: #334155; }
+  </style>
+
+  <rect class="bg" x="0" y="0" width="1800" height="1180"/>
+  <rect x="0" y="0" width="1800" height="122" fill="url(#header)"/>
+  <text class="title" x="60" y="56">Agentic post-trade exception triage on Amazon Bedrock AgentCore</text>
+  <text class="subtitle" x="60" y="89">Synthetic demo architecture: deterministic controls own routing and audit; agents provide governed advisory enrichment.</text>
+
+  <g transform="translate(1285 30)">
+    <rect x="0" y="0" width="455" height="70" rx="8" fill="#ffffff" opacity="0.94"/>
+    <line x1="18" y1="22" x2="72" y2="22" class="control"/>
+    <text class="legend" x="84" y="26">Authoritative workflow</text>
+    <line x1="245" y1="22" x2="299" y2="22" class="evidence"/>
+    <text class="legend" x="311" y="26">Governed evidence</text>
+    <line x1="18" y1="50" x2="72" y2="50" class="stream"/>
+    <text class="legend" x="84" y="54">Optional live stream</text>
+    <line x1="245" y1="50" x2="299" y2="50" class="telemetry"/>
+    <text class="legend" x="311" y="54">Telemetry / eval</text>
+  </g>
+
+  <!-- Demo user -->
+  <g>
+    <rect class="cluster" x="60" y="150" width="280" height="335" rx="8"/>
+    <text class="clusterTitle" x="86" y="184">1. Demo user</text>
+    <text class="clusterNote" x="86" y="207">Synthetic cases only</text>
+
+    <rect class="svcOrange" x="92" y="238" width="216" height="70" rx="8"/>
+    <text class="svcTitle" x="112" y="265">Synthetic exception event</text>
+    <text class="svcText" x="112" y="287">Cloudscape UI or run-case.sh</text>
+
+    <rect class="svcDark" x="92" y="354" width="216" height="82" rx="8"/>
+    <text class="svcTitle" x="112" y="382">Analyst / reviewer browser</text>
+    <text class="svcText" x="112" y="404">Runs a case and inspects evidence,</text>
+    <text class="svcText" x="112" y="421">recommendation, policy, and audit.</text>
+
+    <path class="control" d="M200 309 L200 349"/>
+  </g>
+
+  <!-- UI and API -->
+  <g>
+    <rect class="cluster" x="380" y="150" width="390" height="335" rx="8"/>
+    <text class="clusterTitle" x="406" y="184">2. Demo UI and API</text>
+    <text class="clusterNote" x="406" y="207">No user administration required for the sample</text>
+
+    <rect class="svc" x="416" y="238" width="150" height="70" rx="8"/>
+    <text class="svcTitle" x="436" y="265">CloudFront</text>
+    <text class="svcText" x="436" y="287">HTTPS static UI</text>
+
+    <rect class="svcGray" x="594" y="238" width="140" height="70" rx="8"/>
+    <text class="svcTitle" x="614" y="265">S3 UI bucket</text>
+    <text class="svcText" x="614" y="287">SPA + config.js</text>
+
+    <rect class="svc" x="416" y="345" width="150" height="70" rx="8"/>
+    <text class="svcTitle" x="436" y="372">API Gateway</text>
+    <text class="svcText" x="436" y="394">UI API endpoints</text>
+
+    <rect class="svc" x="594" y="345" width="140" height="70" rx="8"/>
+    <text class="svcTitle" x="614" y="372">UI API Lambda</text>
+    <text class="svcText" x="614" y="394">Cases + executions</text>
+
+    <rect class="svcGreen" x="416" y="431" width="150" height="36" rx="8"/>
+    <text class="smallTitle" x="436" y="454">/executions-stream</text>
+
+    <rect class="svcGreen" x="594" y="431" width="140" height="36" rx="8"/>
+    <text class="smallTitle" x="614" y="454">Streaming Lambda</text>
+  </g>
+
+  <!-- Deterministic control layer -->
+  <g>
+    <rect class="cluster" x="380" y="545" width="560" height="425" rx="8"/>
+    <text class="clusterTitle" x="406" y="579">3. Deterministic control layer</text>
+    <text class="clusterNote" x="406" y="602">Authoritative path for eligibility, validation, routing, escalation, and audit</text>
+
+    <rect class="svcOrange" x="418" y="636" width="225" height="112" rx="8"/>
+    <text class="svcTitle" x="440" y="666">Step Functions</text>
+    <text class="svcText" x="440" y="688">Standard workflow</text>
+    <text class="svcText" x="440" y="709">Normalize -> scope -> invoke</text>
+    <text class="svcText" x="440" y="730">validate -> gate -> route/audit</text>
+
+    <rect class="svc" x="681" y="618" width="220" height="154" rx="8"/>
+    <text class="svcTitle" x="704" y="647">Lambda task handlers</text>
+    <rect class="pill" x="704" y="666" width="174" height="22" rx="6"/>
+    <text class="pillText" x="720" y="682">Normalize + scope</text>
+    <rect class="pill" x="704" y="694" width="174" height="22" rx="6"/>
+    <text class="pillText" x="720" y="710">Invoke AgentCore</text>
+    <rect class="pill" x="704" y="722" width="174" height="22" rx="6"/>
+    <text class="pillText" x="720" y="738">Validate + gate</text>
+    <rect class="pill" x="704" y="750" width="174" height="22" rx="6"/>
+    <text class="pillText" x="720" y="766">Route + audit</text>
+
+    <rect class="svcGray" x="418" y="817" width="225" height="70" rx="8"/>
+    <text class="svcTitle" x="440" y="844">DynamoDB</text>
+    <text class="svcText" x="440" y="866">Case state, audit, synthetic data</text>
+
+    <rect class="svcGray" x="681" y="817" width="220" height="70" rx="8"/>
+    <text class="svcTitle" x="704" y="844">S3 artifact bucket</text>
+    <text class="svcText" x="704" y="866">Datasets, metrics, runtime artifacts</text>
+
+    <rect class="callout" x="418" y="912" width="483" height="34" rx="8"/>
+    <text class="tiny" x="438" y="934">Agents return advisory JSON only; deterministic gates decide routing and audit.</text>
+  </g>
+
+  <!-- Agentic enrichment -->
+  <g>
+    <rect class="cluster" x="980" y="150" width="360" height="335" rx="8"/>
+    <text class="clusterTitle" x="1006" y="184">4. Agentic enrichment</text>
+    <text class="clusterNote" x="1006" y="207">One AgentCore Runtime hosts the agent app</text>
+
+    <rect class="svcPurple" x="1018" y="238" width="284" height="146" rx="8"/>
+    <text class="svcTitle" x="1040" y="266">AgentCore Runtime</text>
+    <text class="svcText" x="1040" y="288">Python + Strands Agents workflow</text>
+    <rect class="pill" x="1040" y="306" width="105" height="24" rx="6"/>
+    <text class="pillText" x="1058" y="323">Summary</text>
+    <rect class="pill" x="1160" y="306" width="105" height="24" rx="6"/>
+    <text class="pillText" x="1177" y="323">Evidence</text>
+    <rect class="pill" x="1040" y="338" width="105" height="24" rx="6"/>
+    <text class="pillText" x="1057" y="355">Playbook</text>
+    <rect class="pill" x="1160" y="338" width="105" height="24" rx="6"/>
+    <text class="pillText" x="1170" y="355">Recommend</text>
+
+    <rect class="svc" x="1018" y="416" width="132" height="52" rx="8"/>
+    <text class="svcTitle" x="1038" y="438">Amazon Bedrock</text>
+    <text class="svcText" x="1038" y="457">Model inference</text>
+
+    <rect class="svcPurple" x="1170" y="416" width="132" height="52" rx="8"/>
+    <text class="svcTitle" x="1190" y="438">AgentCore</text>
+    <text class="svcText" x="1190" y="457">Runtime traces</text>
+  </g>
+
+  <!-- Governed evidence -->
+  <g>
+    <rect class="cluster" x="980" y="545" width="760" height="425" rx="8"/>
+    <text class="clusterTitle" x="1006" y="579">5. Governed evidence access</text>
+    <text class="clusterNote" x="1006" y="602">Runtime cannot read synthetic stores directly; every evidence call goes through Gateway and Policy.</text>
+
+    <rect class="svcGreen" x="1018" y="636" width="190" height="82" rx="8"/>
+    <text class="svcTitle" x="1040" y="665">AgentCore Gateway</text>
+    <text class="svcText" x="1040" y="687">MCP, AWS IAM auth</text>
+    <text class="svcText" x="1040" y="704">Read-only target</text>
+
+    <rect class="svcGreen" x="1250" y="636" width="190" height="82" rx="8"/>
+    <text class="svcTitle" x="1272" y="665">AgentCore Policy</text>
+    <text class="svcText" x="1272" y="687">Cedar permit/forbid</text>
+    <text class="svcText" x="1272" y="704">ENFORCE mode</text>
+
+    <rect class="svc" x="1018" y="770" width="190" height="74" rx="8"/>
+    <text class="svcTitle" x="1040" y="798">Gateway Tool Lambda</text>
+    <text class="svcText" x="1040" y="820">Validates exception_id</text>
+
+    <rect class="svcGray" x="1250" y="770" width="190" height="74" rx="8"/>
+    <text class="svcTitle" x="1272" y="798">Synthetic stores</text>
+    <text class="svcText" x="1272" y="820">DynamoDB + S3</text>
+
+    <rect class="svcGray" x="1486" y="625" width="214" height="230" rx="8"/>
+    <text class="svcTitle" x="1510" y="655">Read-only tools</text>
+    <text class="tiny" x="1510" y="682">get_trade_details</text>
+    <text class="tiny" x="1510" y="707">get_settlement_status</text>
+    <text class="tiny" x="1510" y="732">get_allocation_status</text>
+    <text class="tiny" x="1510" y="757">get_ssi_record</text>
+    <text class="tiny" x="1510" y="782">search_prior_cases</text>
+    <text class="tiny" x="1510" y="807">get_playbook</text>
+    <text class="tiny" x="1510" y="835">All calls are case-scoped.</text>
+
+    <rect class="callout" x="1018" y="904" width="682" height="34" rx="8"/>
+    <text class="tiny" x="1040" y="926">Policy and parameter checks run outside prompts; model text cannot broaden data access.</text>
+  </g>
+
+  <!-- Quality / operations -->
+  <g>
+    <rect class="cluster" x="60" y="1010" width="1680" height="118" rx="8"/>
+    <text class="clusterTitle" x="86" y="1044">6. Quality, audit, and operations</text>
+
+    <rect class="svcGray" x="400" y="1034" width="220" height="62" rx="8"/>
+    <text class="svcTitle" x="422" y="1060">Golden dataset</text>
+    <text class="svcText" x="422" y="1081">Synthetic cases + expected outcomes</text>
+
+    <rect class="svcPurple" x="670" y="1034" width="250" height="62" rx="8"/>
+    <text class="svcTitle" x="692" y="1060">AgentCore Evaluator</text>
+    <text class="svcText" x="692" y="1081">LLM-as-judge quality signal</text>
+
+    <rect class="svcGray" x="970" y="1034" width="250" height="62" rx="8"/>
+    <text class="svcTitle" x="992" y="1060">CloudWatch</text>
+    <text class="svcText" x="992" y="1081">Logs, metrics, dashboard, alarms</text>
+
+    <rect class="svcGray" x="1270" y="1034" width="250" height="62" rx="8"/>
+    <text class="svcTitle" x="1292" y="1060">Audit records</text>
+    <text class="svcText" x="1292" y="1081">Execution ARN, evidence refs, routing</text>
+  </g>
+
+  <!-- Cross-cluster arrows -->
+  <path class="control" d="M309 395 C350 395 365 273 411 273"/>
+  <path class="control" d="M309 395 C356 395 363 380 411 380"/>
+  <path class="control" d="M566 273 L589 273"/>
+  <path class="control" d="M566 380 L589 380"/>
+  <path class="control" d="M664 416 C664 498 664 559 664 616"/>
+  <path class="control" d="M643 692 L676 692"/>
+  <path class="control" d="M901 695 C945 695 944 312 1013 312"/>
+  <path class="control" d="M531 749 L531 812"/>
+  <path class="control" d="M791 773 L791 812"/>
+
+  <path class="stream" d="M566 449 L589 449"/>
+  <path class="stream" d="M734 449 C836 449 875 339 1013 339"/>
+  <rect class="labelBg" x="806" y="385" width="126" height="24" rx="6"/>
+  <text class="arrowLabel" x="821" y="402">preview only</text>
+
+  <path class="control" d="M1084 385 L1084 411"/>
+  <path class="evidence" d="M1160 385 C1220 470 1120 533 1113 631"/>
+  <path class="evidence" d="M1208 677 L1245 677"/>
+  <path class="evidence" d="M1113 719 L1113 765"/>
+  <path class="evidence" d="M1208 807 L1245 807"/>
+  <path class="evidence" d="M1440 807 C1458 807 1465 742 1481 742"/>
+
+  <path class="telemetry" d="M620 1065 L665 1065"/>
+  <path class="telemetry" d="M920 1065 L965 1065"/>
+
+  <rect class="labelBg" x="366" y="352" width="96" height="24" rx="6"/>
+  <text class="arrowLabel" x="380" y="369">start run</text>
+  <rect class="labelBg" x="895" y="610" width="103" height="24" rx="6"/>
+  <text class="arrowLabel" x="909" y="627">invoke runtime</text>
+</svg>

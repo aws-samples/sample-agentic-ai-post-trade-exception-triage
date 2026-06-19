@@ -1,0 +1,8 @@
+{
+  "app": "python3 app.py",
+  "context": {
+    "@aws-cdk/core:newStyleStackSynthesis": true,
+    "region": "us-east-1",
+    "responseStreaming": true
+  }
+}

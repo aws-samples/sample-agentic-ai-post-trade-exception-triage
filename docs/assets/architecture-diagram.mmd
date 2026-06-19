@@ -1,0 +1,60 @@
+flowchart LR
+  analyst["Analyst / reviewer browser"]
+  scripts["Synthetic case event\nUI or run-case.sh"]
+
+  subgraph ui["Demo UI and API"]
+    cloudfront["Amazon CloudFront\nCloudscape UI"]
+    uiBucket["Amazon S3\nstatic UI bucket"]
+    api["Amazon API Gateway\nUI API + optional stream route"]
+    uiLambda["AWS Lambda\nUI API handler"]
+    streamLambda["AWS Lambda\nstreaming invoke handler"]
+  end
+
+  subgraph control["Deterministic triage control layer"]
+    sfn["AWS Step Functions\nStandard workflow"]
+    tasks["AWS Lambda task handlers\nnormalize, scope, invoke, validate,\npolicy/confidence, route, audit"]
+    auditStore["Amazon DynamoDB\ncase state + audit records"]
+    artifactStore["Amazon S3\nevaluation + runtime artifacts"]
+  end
+
+  subgraph agent["Agentic enrichment"]
+    runtime["Amazon Bedrock AgentCore Runtime\nStrands workflow:\nsummary, evidence, playbook, recommendation"]
+    bedrock["Amazon Bedrock\nconfigured model"]
+  end
+
+  subgraph evidence["Governed evidence access"]
+    gateway["Amazon Bedrock AgentCore Gateway\nMCP read-only tools"]
+    policy["Amazon Bedrock AgentCore Policy\nCedar policies in ENFORCE"]
+    tools["AWS Lambda\nGateway tool handler"]
+    data["Synthetic evidence stores\nDynamoDB + S3"]
+  end
+
+  subgraph quality["Quality, audit, and operations"]
+    evaluator["Amazon Bedrock AgentCore Evaluator\nLLM-as-judge"]
+    golden["Golden dataset"]
+    cw["Amazon CloudWatch\nlogs, metrics, dashboard"]
+  end
+
+  scripts --> analyst
+  analyst --> cloudfront
+  cloudfront --> uiBucket
+  analyst --> api
+  api --> uiLambda
+  uiLambda --> sfn
+  api -. optional live stage stream .-> streamLambda
+  streamLambda -. preview only .-> runtime
+  sfn --> tasks
+  tasks --> runtime
+  tasks --> auditStore
+  tasks --> artifactStore
+  runtime --> bedrock
+  runtime --> gateway
+  gateway --> policy
+  gateway --> tools
+  tools --> data
+  golden --> evaluator
+  evaluator --> runtime
+  sfn -. telemetry .-> cw
+  tasks -. telemetry .-> cw
+  runtime -. telemetry .-> cw
+  gateway -. telemetry .-> cw

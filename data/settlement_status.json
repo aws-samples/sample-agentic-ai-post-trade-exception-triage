@@ -1,0 +1,10 @@
+[
+  {"exception_id":"EXC-SYN-10042","settlement_status":"PENDING_INSTRUCTION","depository_status":"UNMATCHED","reason":"Missing standing settlement instruction for receiving account","source_id":"settlement_status:EXC-SYN-10042","as_of":"2026-04-24T13:20:00Z"},
+  {"exception_id":"EXC-SYN-10043","settlement_status":"PENDING_ALLOCATION","depository_status":"UNMATCHED","reason":"Block allocation quantity does not equal settlement quantity","source_id":"settlement_status:EXC-SYN-10043","as_of":"2026-04-24T13:20:00Z"},
+  {"exception_id":"EXC-SYN-10044","settlement_status":"PENDING_COUNTERPARTY_REVIEW","depository_status":"UNMATCHED","reason":"Counterparty legal entity code differs between trade and settlement instruction","source_id":"settlement_status:EXC-SYN-10044","as_of":"2026-04-24T13:20:00Z"},
+  {"exception_id":"EXC-SYN-10045","settlement_status":"CONFLICTING_SOURCE_STATUS","depository_status":"MATCHED","reason":"Internal settlement platform shows unmatched while depository simulator shows matched","source_id":"settlement_status:EXC-SYN-10045","as_of":"2026-04-24T13:20:00Z"},
+  {"exception_id":"EXC-SYN-10046","settlement_status":"PENDING_CONFIRMATION","depository_status":"UNMATCHED","reason":"Trade confirmation not affirmed by synthetic counterparty workflow","source_id":"settlement_status:EXC-SYN-10046","as_of":"2026-04-24T13:20:00Z"},
+  {"exception_id":"EXC-SYN-10047","settlement_status":"PENDING_RESTRICTED_REVIEW","depository_status":"UNMATCHED","reason":"Restricted counterparty marker present","source_id":"settlement_status:EXC-SYN-10047","as_of":"2026-04-24T13:20:00Z"},
+  {"exception_id":"EXC-SYN-10048","settlement_status":"PENDING_INSTRUCTION","depository_status":"UNMATCHED","reason":"Unmatched near synthetic settlement cut-off","source_id":"settlement_status:EXC-SYN-10048","as_of":"2026-04-24T13:20:00Z"},
+  {"exception_id":"EXC-SYN-10049","settlement_status":"PENDING_REFERENCE_DATA","depository_status":"UNMATCHED","reason":"Reference data timestamp predates trade date amendment","source_id":"settlement_status:EXC-SYN-10049","as_of":"2026-04-24T13:20:00Z"}
+]

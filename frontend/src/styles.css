@@ -1,0 +1,572 @@
+body {
+  margin: 0;
+}
+
+.inline-icon-label {
+  align-items: center;
+  display: inline-flex;
+  gap: 6px;
+}
+
+.inline-icon-label-xs {
+  gap: 4px;
+}
+
+.live-execution-anchor {
+  scroll-margin-top: 16px;
+}
+
+.auth-access-shell {
+  align-items: stretch;
+  display: grid;
+  gap: 28px;
+  grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+  padding: 8px 2px;
+}
+
+.auth-access-copy {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  justify-content: center;
+  min-width: 0;
+}
+
+.auth-access-title {
+  color: #16191f;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.15;
+  max-width: 680px;
+}
+
+.auth-access-description {
+  color: #414d5c;
+  line-height: 1.45;
+  max-width: 720px;
+}
+
+.auth-experience-list {
+  background: #f7f9fa;
+  border: 1px solid #d5dbdb;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  justify-content: center;
+  min-width: 0;
+  padding: 16px;
+}
+
+.auth-experience-item {
+  align-items: flex-start;
+  background: #ffffff;
+  border: 1px solid #e9ebed;
+  border-radius: 6px;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 36px minmax(0, 1fr);
+  min-width: 0;
+  padding: 12px;
+}
+
+.auth-experience-icon {
+  align-items: center;
+  background: #eef6ff;
+  border: 1px solid #b6d7f5;
+  border-radius: 6px;
+  color: #0972d3;
+  display: flex;
+  height: 36px;
+  justify-content: center;
+  width: 36px;
+}
+
+@media (max-width: 780px) {
+  .auth-access-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .auth-access-title {
+    font-size: 23px;
+  }
+}
+
+.timeline-row {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  min-height: 28px;
+}
+
+.timeline-row svg {
+  color: #037f0c;
+  flex: 0 0 auto;
+}
+
+.step-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.step-row {
+  align-items: flex-start;
+  background: #ffffff;
+  border: 1px solid #d5dbdb;
+  border-left-width: 4px;
+  border-radius: 6px;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 32px 1fr auto;
+  padding: 12px 14px;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.step-row .step-icon {
+  align-items: center;
+  display: flex;
+  height: 24px;
+  justify-content: center;
+  width: 24px;
+}
+
+.step-row .step-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.step-row .step-label {
+  font-size: 14px;
+}
+
+.step-row .step-hint {
+  color: #5f6b7a;
+  font-size: 12px;
+}
+
+.step-row.step-running {
+  background: #eef6ff;
+  border-left-color: #0972d3;
+}
+
+.step-row.step-exited {
+  background: #f2fbf4;
+  border-left-color: #037f0c;
+}
+
+.step-row.step-failed {
+  background: #fdf2f2;
+  border-left-color: #c02828;
+}
+
+.step-row.step-waiting,
+.step-row.step-pending {
+  background: #fafbfc;
+  border-left-color: #d5dbdb;
+  color: #5f6b7a;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Normalize exception sub-panel --------------------------------------------*/
+
+.normalize-panel {
+  background: #f7f9fa;
+  border: 1px solid #d5dbdb;
+  border-radius: 6px;
+  margin-top: 10px;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.normalize-hero {
+  align-items: center;
+  background: #ffffff;
+  border-bottom: 1px solid #e9ebed;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 40px minmax(0, 1fr) auto;
+  padding: 12px;
+}
+
+.normalize-file-icon {
+  align-items: center;
+  background: #eef6ff;
+  border: 1px solid #b6d7f5;
+  border-radius: 6px;
+  color: #0972d3;
+  display: flex;
+  height: 40px;
+  justify-content: center;
+  width: 40px;
+}
+
+.normalize-file-main {
+  min-width: 0;
+}
+
+.normalize-kicker {
+  color: #5f6b7a;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.normalize-file-name {
+  color: #16191f;
+  font-size: 14px;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.normalize-file-meta {
+  color: #5f6b7a;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 12px;
+  gap: 8px 14px;
+  margin-top: 2px;
+}
+
+.normalize-stats {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding: 12px;
+}
+
+.normalize-stats > div {
+  background: #ffffff;
+  border: 1px solid #e9ebed;
+  border-radius: 4px;
+  min-width: 0;
+  padding: 8px 10px;
+  overflow-wrap: anywhere;
+}
+
+.normalize-flow {
+  align-items: stretch;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: minmax(0, 1fr) 32px minmax(0, 1fr);
+  padding: 0 12px 12px;
+}
+
+.normalize-block {
+  background: #ffffff;
+  border: 1px solid #e9ebed;
+  border-left: 3px solid #7d8998;
+  border-radius: 4px;
+  min-width: 0;
+  padding: 10px;
+}
+
+.normalize-contract {
+  border-left-color: #037f0c;
+}
+
+.normalize-block-title {
+  color: #414d5c;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.normalize-arrow {
+  align-items: center;
+  color: #0972d3;
+  display: flex;
+  justify-content: center;
+}
+
+.raw-field-grid {
+  display: grid;
+  gap: 6px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.raw-field {
+  background: #f8fafc;
+  border: 1px solid #edf0f2;
+  border-radius: 4px;
+  min-width: 0;
+  padding: 6px 8px;
+}
+
+.raw-field span {
+  color: #5f6b7a;
+  display: block;
+  font-size: 11px;
+  margin-bottom: 2px;
+}
+
+.raw-field strong {
+  color: #16191f;
+  display: block;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.raw-field-wide {
+  grid-column: 1 / -1;
+}
+
+.mapping-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.mapping-row {
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #e9ebed;
+  border-radius: 4px;
+  display: grid;
+  gap: 8px;
+  grid-template-columns: minmax(92px, 0.9fr) 18px minmax(120px, 1fr) minmax(100px, 1fr) minmax(100px, 1fr) minmax(140px, 1.2fr);
+  min-width: 0;
+  padding: 6px 8px;
+}
+
+.mapping-row code,
+.mapping-row span,
+.mapping-row small {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.mapping-row code {
+  color: #5f6b7a;
+  font-size: 11px;
+}
+
+.mapping-row span {
+  font-size: 12px;
+}
+
+.mapping-row small {
+  color: #5f6b7a;
+  font-size: 11px;
+}
+
+.normalize-checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+@media (max-width: 900px) {
+  .normalize-stats,
+  .normalize-flow {
+    grid-template-columns: 1fr;
+  }
+
+  .normalize-arrow {
+    display: none;
+  }
+
+  .raw-field-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mapping-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .step-row {
+    grid-template-columns: 28px minmax(0, 1fr);
+    padding: 10px;
+  }
+
+  .step-row .step-badge {
+    grid-column: 2;
+    justify-self: start;
+  }
+
+  .normalize-hero {
+    grid-template-columns: 40px minmax(0, 1fr);
+  }
+
+  .normalize-hero > :last-child {
+    grid-column: 2;
+    justify-self: start;
+  }
+
+  .normalize-file-meta {
+    gap: 4px 10px;
+  }
+
+  .normalize-file-name {
+    font-size: 13px;
+  }
+}
+
+/* Streaming sub-panel (feature: responseStreaming) --------------------------*/
+
+.stream-panel {
+  background: #f8fafc;
+  border: 1px solid #d5dbdb;
+  border-radius: 6px;
+  margin-top: 10px;
+  padding: 10px 12px;
+  /* Guard: never allow any child (long-line pre, long teaser, wide badge)
+     to push the panel wider than its container. Any content that can't
+     fit wraps or gets a local scroll rather than expanding the page. */
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+.stream-panel-header {
+  align-items: center;
+  color: #414d5c;
+  display: flex;
+  font-size: 12px;
+  font-weight: 600;
+  gap: 8px;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.stream-stages {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.stream-stage {
+  background: #ffffff;
+  border: 1px solid #e9ebed;
+  border-left-width: 3px;
+  border-radius: 4px;
+  padding: 8px 10px;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.stream-stage .stream-stage-row {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+}
+
+.stream-stage .stream-stage-icon {
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+  width: 20px;
+}
+
+.stream-stage .stream-stage-label {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.stream-stage .stream-stage-hint {
+  color: #5f6b7a;
+  font-size: 11px;
+  margin-left: 28px;
+  margin-top: 2px;
+}
+
+.stream-stage .stream-stage-teaser {
+  color: #0f7d3b;
+  font-size: 12px;
+  margin-left: 28px;
+  margin-top: 4px;
+}
+
+.stream-stage.stream-stage-running {
+  background: #eef6ff;
+  border-left-color: #0972d3;
+}
+
+.stream-stage.stream-stage-done {
+  background: #f2fbf4;
+  border-left-color: #037f0c;
+}
+
+.stream-stage.stream-stage-error {
+  background: #fdf2f2;
+  border-left-color: #c02828;
+}
+
+.stream-stage-pre {
+  background: #0e1b2c;
+  border-radius: 4px;
+  color: #d1e2f7;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+  font-size: 11px;
+  margin: 8px 0 0 0;
+  max-height: 260px;
+  overflow: auto;
+  padding: 8px 10px;
+  /* Allow long JSON strings (e.g. recommended_action) to wrap instead of
+     forcing a horizontal scrollbar on the parent container. white-space:
+     pre-wrap preserves newlines + indentation from JSON.stringify; the
+     overflow-wrap fallback breaks any token that is longer than the
+     available width (long source_ids, ARNs, etc). */
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.recommendation-list {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.recommendation-list li {
+  margin: 0 0 8px;
+}
+
+.recommendation-list li:last-child {
+  margin-bottom: 0;
+}
+
+/* Golden case cards ---------------------------------------------------------*/
+
+/* Body wrapper inside each Cloudscape case card. We turn the card section
+   content into a flex column so the meta and the primary button can be
+   anchored to consistent positions regardless of summary length. */
+.case-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 100%;
+}
+
+.case-card-body > :first-child {
+  /* Let the summary absorb height differences so the button row is pushed
+     to a consistent bottom across cards in the same row. */
+  flex: 1 1 auto;
+}
+
+/* Compact two-column meta strip: Exception + Priority side by side. */
+.case-card-meta {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, auto);
+  gap: 12px 24px;
+  align-items: start;
+}
+
+/* Primary action row: bottom-left alignment, consistent across cards. */
+.case-card-actions {
+  margin-top: auto;
+  display: flex;
+  justify-content: flex-start;
+}

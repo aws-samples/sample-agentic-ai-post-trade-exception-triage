@@ -1,0 +1,5 @@
+[
+  {"exception_id":"EXC-SYN-10042","allocation_status":"MATCHED","allocated_quantity":12500,"settlement_quantity":12500,"source_id":"allocation:EXC-SYN-10042","as_of":"2026-04-24T13:11:00Z"},
+  {"exception_id":"EXC-SYN-10043","allocation_status":"UNMATCHED","allocated_quantity":8700,"settlement_quantity":9000,"source_id":"allocation:EXC-SYN-10043","as_of":"2026-04-24T13:11:00Z"},
+  {"exception_id":"EXC-SYN-10046","allocation_status":"MATCHED_BUT_UNAFFIRMED","allocated_quantity":3000,"settlement_quantity":3000,"source_id":"allocation:EXC-SYN-10046","as_of":"2026-04-24T13:11:00Z"}
+]

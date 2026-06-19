@@ -1,0 +1,75 @@
+# Python local environments, caches, and test output.
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+__pycache__/
+*.pyc
+*.pyo
+
+# Node/Vite dependencies and generated output.
+node_modules/
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# Keep lockfiles versioned for reproducible sample builds, even when a user-level
+# gitignore excludes package-lock.json.
+!package-lock.json
+!frontend/package-lock.json
+
+# CDK, AWS, and demo-generated local output.
+cdk.out/
+cdk.context.json
+cdk-outputs.json
+evaluation-output/
+.aws-sam/
+
+# Local environment and credential files.
+.env
+.env.*
+!.env.example
+.kiro-session-creds
+
+# Logs and packaged artifacts generated during local validation/publication.
+*.log
+*.zip
+*.tar.gz
+
+# Build artifacts produced by scripts/deploy.sh.
+#
+# build/runtime/   ARM64 Linux wheels staged for the AgentCore Runtime ZIP.
+#                  Regenerated every run by `uv pip install --python-platform
+#                  aarch64-manylinux_2_28 --only-binary=:all: --target build/runtime`.
+# build/policies/  Scratch Cedar files used during post-deploy plumbing.
+# build/*.log      Raw deploy/run-case/evaluation log captures.
+# build/*.json     Scratch describe-execution / describe-stack responses.
+#
+# Keep the directory name literal — `build` can also be a Python entry-point
+# name, so restrict the ignore to the top-level directory.
+/build/
+
+# OS and editor metadata.
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Hypothesis' example database — regenerated automatically by the test suite.
+.hypothesis/
+
+# Kiro working state is local planning material, not sample source.
+.kiro/
+
+# Personal VS Code workspace file — commit only a shared workspace config.
+*.code-workspace
+
+# Kiro spec config (per-user state, not intended for sharing).
+.kiro/specs/**/.config.kiro

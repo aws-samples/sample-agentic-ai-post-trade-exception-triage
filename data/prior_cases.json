@@ -1,0 +1,7 @@
+[
+  {"case_id":"CASE-SYN-7781","root_cause_category":"MISSING_OR_STALE_SSI","summary":"Synthetic prior case where missing SSI delayed matching until analyst requested updated instructions.","resolution":"Routed to SSI remediation; analyst approved instruction update outside the agent workflow.","source_id":"prior_case:CASE-SYN-7781"},
+  {"case_id":"CASE-SYN-7782","root_cause_category":"ALLOCATION_MISMATCH","summary":"Synthetic prior case where allocation quantity was lower than settlement quantity.","resolution":"Allocation operations corrected allocation split after human review.","source_id":"prior_case:CASE-SYN-7782"},
+  {"case_id":"CASE-SYN-7783","root_cause_category":"COUNTERPARTY_PROFILE_MISMATCH","summary":"Synthetic prior case with mismatched legal entity code.","resolution":"Counterparty operations reviewed account setup and routed correction request.","source_id":"prior_case:CASE-SYN-7783"},
+  {"case_id":"CASE-SYN-7784","root_cause_category":"MISSING_CONFIRMATION","summary":"Synthetic prior case where confirmation workflow had no affirmation event.","resolution":"Confirmation operations followed up with synthetic counterparty contact queue.","source_id":"prior_case:CASE-SYN-7784"},
+  {"case_id":"CASE-SYN-7785","root_cause_category":"STALE_REFERENCE_DATA","summary":"Synthetic prior case where reference data freshness was below policy threshold.","resolution":"Reference data remediation refreshed approved static record.","source_id":"prior_case:CASE-SYN-7785"}
+]

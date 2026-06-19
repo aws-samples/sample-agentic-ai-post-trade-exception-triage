@@ -1,0 +1,188 @@
+[
+  {
+    "case_key": "missing_ssi",
+    "exception_id": "EXC-SYN-10042",
+    "source_system": "synthetic-reconciliation-platform",
+    "file_name": "settlement_breaks_2026-04-24_1320.csv",
+    "batch_id": "BRK-BATCH-SYN-20260424-1320",
+    "record_number": 17,
+    "received_at": "2026-04-24T13:20:12Z",
+    "file_profile": {
+      "format": "CSV",
+      "delimiter": "|",
+      "header_row": true,
+      "encoding": "UTF-8",
+      "record_count": 184,
+      "checksum": "sha256:9f2c4a5d7b8e1c0a6d3f5b2a7c1e4d9f"
+    },
+    "raw_record": {
+      "brk_id": "BRK-SSI-004217",
+      "brk_cd": "SSI_MISS",
+      "brk_desc": "Missing standing settlement instruction for receiving account",
+      "sev": "H",
+      "src_sys": "RECPLAT",
+      "desk_cd": "USCE",
+      "prd": "EQ",
+      "mkt": "US",
+      "cp": "CP-SYN-4421",
+      "acct": "ACCT-SYN-8812",
+      "sec": "SYNTH-EQ-001",
+      "td": "20260423",
+      "sd": "20260424",
+      "dep_stat": "UNMATCHED",
+      "settle_stat": "PENDING_INSTRUCTION",
+      "allow_tools": "trade,settlement,allocation,ssi,playbook,prior_case"
+    },
+    "field_mapping": [
+      {"source_field": "brk_id", "target_field": "exception_id", "raw_value": "BRK-SSI-004217", "normalized_value": "EXC-SYN-10042", "transform": "Mapped to enterprise exception identifier"},
+      {"source_field": "brk_cd", "target_field": "exception_type", "raw_value": "SSI_MISS", "normalized_value": "SETTLEMENT_INSTRUCTION_MISMATCH", "transform": "Break-code lookup"},
+      {"source_field": "sev", "target_field": "priority", "raw_value": "H", "normalized_value": "HIGH", "transform": "Severity code expansion"},
+      {"source_field": "desk_cd", "target_field": "desk", "raw_value": "USCE", "normalized_value": "US_CASH_EQUITIES", "transform": "Desk-code lookup"},
+      {"source_field": "prd", "target_field": "product", "raw_value": "EQ", "normalized_value": "EQUITY", "transform": "Product-code lookup"},
+      {"source_field": "cp", "target_field": "counterparty_id", "raw_value": "CP-SYN-4421", "normalized_value": "CP-SYN-4421", "transform": "Pass-through"},
+      {"source_field": "acct", "target_field": "account_id", "raw_value": "ACCT-SYN-8812", "normalized_value": "ACCT-SYN-8812", "transform": "Pass-through"},
+      {"source_field": "sd", "target_field": "settlement_date", "raw_value": "20260424", "normalized_value": "2026-04-24", "transform": "YYYYMMDD to ISO date"},
+      {"source_field": "allow_tools", "target_field": "allowed_tool_scope", "raw_value": "trade,settlement,allocation,ssi,playbook,prior_case", "normalized_value": "trade, settlement, allocation, ssi, playbook, prior_case", "transform": "Comma-separated scope to list"}
+    ],
+    "validation_checks": [
+      {"check": "Required fields present", "result": "PASS", "detail": "exception_id, exception_type, product, market, desk, counterparty_id, account_id, settlement_date"},
+      {"check": "Supported market/product", "result": "PASS", "detail": "US / EQUITY"},
+      {"check": "Tool scope bounded", "result": "PASS", "detail": "Only read-only evidence domains are allowed"},
+      {"check": "Synthetic data guard", "result": "PASS", "detail": "No real client, account, trade, or settlement data"}
+    ]
+  },
+  {
+    "case_key": "unmatched_allocation",
+    "exception_id": "EXC-SYN-10043",
+    "source_system": "synthetic-allocation-monitor",
+    "file_name": "allocation_breaks_2026-04-24_1315.csv",
+    "batch_id": "BRK-BATCH-SYN-20260424-1315",
+    "record_number": 42,
+    "received_at": "2026-04-24T13:15:45Z",
+    "file_profile": {"format": "CSV", "delimiter": ",", "header_row": true, "encoding": "UTF-8", "record_count": 96, "checksum": "sha256:2d8c5b1e9a4f6c0b7d3e8f1a5c9b2d4e"},
+    "raw_record": {"break_ref": "ALLOC-0042", "break_code": "ALLOC_QTY_DIFF", "severity": "M", "source": "ALLOCMON", "desk": "USCE", "product": "EQ", "market": "US", "counterparty": "CP-SYN-4422", "account": "ACCT-SYN-8813", "security": "SYNTH-EQ-002", "trade_date": "20260423", "settlement_date": "20260424", "allocation_state": "QUANTITY_MISMATCH"},
+    "field_mapping": [
+      {"source_field": "break_code", "target_field": "exception_type", "raw_value": "ALLOC_QTY_DIFF", "normalized_value": "ALLOCATION_MISMATCH", "transform": "Break-code lookup"},
+      {"source_field": "severity", "target_field": "priority", "raw_value": "M", "normalized_value": "MEDIUM", "transform": "Severity code expansion"},
+      {"source_field": "settlement_date", "target_field": "settlement_date", "raw_value": "20260424", "normalized_value": "2026-04-24", "transform": "YYYYMMDD to ISO date"}
+    ],
+    "validation_checks": [
+      {"check": "Required fields present", "result": "PASS", "detail": "Allocation break has routing identifiers"},
+      {"check": "Supported market/product", "result": "PASS", "detail": "US / EQUITY"}
+    ]
+  },
+  {
+    "case_key": "counterparty_mismatch",
+    "exception_id": "EXC-SYN-10044",
+    "source_system": "synthetic-counterparty-control",
+    "file_name": "counterparty_profile_breaks_2026-04-24_1305.csv",
+    "batch_id": "BRK-BATCH-SYN-20260424-1305",
+    "record_number": 8,
+    "received_at": "2026-04-24T13:05:31Z",
+    "file_profile": {"format": "CSV", "delimiter": "|", "header_row": true, "encoding": "UTF-8", "record_count": 33, "checksum": "sha256:7c1d5a9e2b4f8c0d6e3a1b5f9d2c4e8a"},
+    "raw_record": {"brk_id": "CP-0008", "brk_cd": "CP_PROFILE_DIFF", "sev": "M", "desk_cd": "USCE", "prd": "EQ", "mkt": "US", "cp": "CP-SYN-4423", "acct": "ACCT-SYN-8814", "sec": "SYNTH-EQ-003", "td": "20260423", "sd": "20260424"},
+    "field_mapping": [
+      {"source_field": "brk_cd", "target_field": "exception_type", "raw_value": "CP_PROFILE_DIFF", "normalized_value": "COUNTERPARTY_PROFILE_MISMATCH", "transform": "Break-code lookup"},
+      {"source_field": "cp", "target_field": "counterparty_id", "raw_value": "CP-SYN-4423", "normalized_value": "CP-SYN-4423", "transform": "Pass-through"}
+    ],
+    "validation_checks": [
+      {"check": "Required fields present", "result": "PASS", "detail": "Counterparty and account identifiers present"},
+      {"check": "Synthetic data guard", "result": "PASS", "detail": "Synthetic-only identifiers"}
+    ]
+  },
+  {
+    "case_key": "settlement_status_mismatch",
+    "exception_id": "EXC-SYN-10045",
+    "source_system": "synthetic-settlement-monitor",
+    "file_name": "settlement_status_breaks_2026-04-24_1325.csv",
+    "batch_id": "BRK-BATCH-SYN-20260424-1325",
+    "record_number": 23,
+    "received_at": "2026-04-24T13:25:09Z",
+    "file_profile": {"format": "CSV", "delimiter": ",", "header_row": true, "encoding": "UTF-8", "record_count": 61, "checksum": "sha256:1a6e9d3c5b8f2a0e4d7c1b9f5a3e8d2c"},
+    "raw_record": {"break_ref": "SETTLE-0023", "break_code": "STATUS_CONFLICT", "severity": "H", "source": "SETTLEMON", "desk": "USCE", "product": "EQ", "market": "US", "counterparty": "CP-SYN-4424", "account": "ACCT-SYN-8815", "security": "SYNTH-EQ-004", "trade_date": "20260423", "settlement_date": "20260424"},
+    "field_mapping": [
+      {"source_field": "break_code", "target_field": "exception_type", "raw_value": "STATUS_CONFLICT", "normalized_value": "SETTLEMENT_STATUS_MISMATCH", "transform": "Break-code lookup"},
+      {"source_field": "severity", "target_field": "priority", "raw_value": "H", "normalized_value": "HIGH", "transform": "Severity code expansion"}
+    ],
+    "validation_checks": [
+      {"check": "Required fields present", "result": "PASS", "detail": "Trade and settlement identifiers present"},
+      {"check": "Conflict marker preserved", "result": "PASS", "detail": "Downstream gate can force human review"}
+    ]
+  },
+  {
+    "case_key": "missing_confirmation",
+    "exception_id": "EXC-SYN-10046",
+    "source_system": "synthetic-confirmation-platform",
+    "file_name": "confirmation_breaks_2026-04-24_1240.csv",
+    "batch_id": "BRK-BATCH-SYN-20260424-1240",
+    "record_number": 59,
+    "received_at": "2026-04-24T12:40:27Z",
+    "file_profile": {"format": "CSV", "delimiter": ",", "header_row": true, "encoding": "UTF-8", "record_count": 77, "checksum": "sha256:5d2b8e1f4a7c9d0b3e6f1a8c2d5b7e9f"},
+    "raw_record": {"break_ref": "CONF-0059", "break_code": "NO_AFFIRM", "severity": "M", "source": "CONFIRM", "desk": "USCE", "product": "EQ", "market": "US", "counterparty": "CP-SYN-4425", "account": "ACCT-SYN-8816", "security": "SYNTH-EQ-005", "trade_date": "20260423", "settlement_date": "20260424"},
+    "field_mapping": [
+      {"source_field": "break_code", "target_field": "exception_type", "raw_value": "NO_AFFIRM", "normalized_value": "MISSING_CONFIRMATION", "transform": "Break-code lookup"},
+      {"source_field": "source", "target_field": "source_system", "raw_value": "CONFIRM", "normalized_value": "synthetic-confirmation-platform", "transform": "Source-system lookup"}
+    ],
+    "validation_checks": [
+      {"check": "Required fields present", "result": "PASS", "detail": "Confirmation break has settlement identifiers"},
+      {"check": "Supported exception type", "result": "PASS", "detail": "MISSING_CONFIRMATION"}
+    ]
+  },
+  {
+    "case_key": "restricted_counterparty",
+    "exception_id": "EXC-SYN-10047",
+    "source_system": "synthetic-reconciliation-platform",
+    "file_name": "settlement_breaks_2026-04-24_1320.csv",
+    "batch_id": "BRK-BATCH-SYN-20260424-1320",
+    "record_number": 93,
+    "received_at": "2026-04-24T13:20:12Z",
+    "file_profile": {"format": "CSV", "delimiter": "|", "header_row": true, "encoding": "UTF-8", "record_count": 184, "checksum": "sha256:9f2c4a5d7b8e1c0a6d3f5b2a7c1e4d9f"},
+    "raw_record": {"brk_id": "BRK-SSI-004293", "brk_cd": "SSI_MISS", "sev": "H", "src_sys": "RECPLAT", "desk_cd": "USCE", "prd": "EQ", "mkt": "US", "cp": "CP-SYN-RESTRICTED-01", "acct": "ACCT-SYN-8817", "sec": "SYNTH-EQ-006", "td": "20260423", "sd": "20260424"},
+    "field_mapping": [
+      {"source_field": "cp", "target_field": "counterparty_id", "raw_value": "CP-SYN-RESTRICTED-01", "normalized_value": "CP-SYN-RESTRICTED-01", "transform": "Pass-through"},
+      {"source_field": "brk_cd", "target_field": "exception_type", "raw_value": "SSI_MISS", "normalized_value": "SETTLEMENT_INSTRUCTION_MISMATCH", "transform": "Break-code lookup"}
+    ],
+    "validation_checks": [
+      {"check": "Required fields present", "result": "PASS", "detail": "Restricted counterparty case is structurally valid"},
+      {"check": "Policy marker preserved", "result": "PASS", "detail": "Scope gate will block agent enrichment"}
+    ]
+  },
+  {
+    "case_key": "near_cutoff_escalation",
+    "exception_id": "EXC-SYN-10048",
+    "source_system": "synthetic-settlement-monitor",
+    "file_name": "near_cutoff_breaks_2026-04-24_1542.csv",
+    "batch_id": "BRK-BATCH-SYN-20260424-1542",
+    "record_number": 6,
+    "received_at": "2026-04-24T15:42:02Z",
+    "file_profile": {"format": "CSV", "delimiter": ",", "header_row": true, "encoding": "UTF-8", "record_count": 14, "checksum": "sha256:8a3d1c5f9e2b7d0a4c6e1f5b9d3a2c8e"},
+    "raw_record": {"break_ref": "CUTOFF-0006", "break_code": "SSI_MISS", "severity": "C", "source": "SETTLEMON", "desk": "USCE", "product": "EQ", "market": "US", "counterparty": "CP-SYN-4426", "account": "ACCT-SYN-8818", "security": "SYNTH-EQ-007", "trade_date": "20260423", "settlement_date": "20260424", "minutes_to_cutoff": "18"},
+    "field_mapping": [
+      {"source_field": "minutes_to_cutoff", "target_field": "minutes_to_cutoff", "raw_value": "18", "normalized_value": "18", "transform": "String to integer"},
+      {"source_field": "severity", "target_field": "priority", "raw_value": "C", "normalized_value": "CRITICAL", "transform": "Severity code expansion"}
+    ],
+    "validation_checks": [
+      {"check": "Required fields present", "result": "PASS", "detail": "Near-cutoff break has routing identifiers"},
+      {"check": "Cut-off marker preserved", "result": "PASS", "detail": "Scope gate will force urgent manual review"}
+    ]
+  },
+  {
+    "case_key": "stale_reference_data",
+    "exception_id": "EXC-SYN-10049",
+    "source_system": "synthetic-reference-data-control",
+    "file_name": "reference_data_breaks_2026-04-24_1200.csv",
+    "batch_id": "BRK-BATCH-SYN-20260424-1200",
+    "record_number": 31,
+    "received_at": "2026-04-24T12:00:54Z",
+    "file_profile": {"format": "CSV", "delimiter": "|", "header_row": true, "encoding": "UTF-8", "record_count": 49, "checksum": "sha256:4f8c2a7d1e5b9c0a3d6f2e8b1c5a9d7e"},
+    "raw_record": {"brk_id": "REF-0031", "brk_cd": "REFDATA_STALE", "sev": "M", "src_sys": "REFCTRL", "desk_cd": "USCE", "prd": "EQ", "mkt": "US", "cp": "CP-SYN-4427", "acct": "ACCT-SYN-8819", "sec": "SYNTH-EQ-008", "td": "20260423", "sd": "20260424", "last_verified": "20260112"},
+    "field_mapping": [
+      {"source_field": "brk_cd", "target_field": "exception_type", "raw_value": "REFDATA_STALE", "normalized_value": "REFERENCE_DATA_STALE", "transform": "Break-code lookup"},
+      {"source_field": "last_verified", "target_field": "reference_data_signal", "raw_value": "20260112", "normalized_value": "stale reference data", "transform": "Freshness threshold evaluation"}
+    ],
+    "validation_checks": [
+      {"check": "Required fields present", "result": "PASS", "detail": "Reference-data break has settlement identifiers"},
+      {"check": "Freshness signal preserved", "result": "PASS", "detail": "Agent evidence stage can retrieve SSI/reference record"}
+    ]
+  }
+]
