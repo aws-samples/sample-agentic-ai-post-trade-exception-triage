@@ -47,21 +47,7 @@ The deploy script checks the `CDKToolkit` `FileAssetsBucket` encryption configur
 
 ### Bedrock model-access notes
 
-For third-party models, Amazon Bedrock may need to enable the model for the account before the first successful invocation. Anthropic models also require a first-time-use form. If either the Runtime model or evaluator model is not enabled, live calls or AgentCore Evaluator creation can fail with `AccessDeniedException` mentioning `aws-marketplace:ViewSubscriptions` or `aws-marketplace:Subscribe`.
-
-Recommended setup for a sample or production account:
-
-1. Use an administrator or provisioning role to enable model access as a one-time account setup task.
-2. Grant the deployed AgentCore Runtime only the Bedrock invoke permissions it needs.
-3. Do not grant AWS Marketplace subscription permissions to the application runtime role just to make first invocation succeed.
-4. Confirm the provisioning role can create an AgentCore Evaluator with the configured `BEDROCK_EVALUATOR_MODEL_ID`.
-5. Rerun `./scripts/run-case.sh missing_ssi` and `./scripts/run-evaluation.sh` after model access is enabled if you need model-backed metrics.
-
-`ENABLE_AGENTCORE_EVALUATOR` defaults to `true`. Set `ENABLE_AGENTCORE_EVALUATOR=false` only when the account is not yet authorized for evaluator creation and you need to deploy the rest of the sample while account setup is completed.
-
-The browser-facing synthetic demo API is always protected by Amazon Cognito Hosted UI. The stack creates a Cognito user pool, user-pool client, Hosted UI domain, and API Gateway Cognito authorizer on every deployment. Public self-registration and the Cognito user-password auth flow are disabled for the demo user pool; create or invite demo users through Cognito before sharing the protected UI. After sign-in, the UI sends the returned ID token in the `Authorization` header for API calls, and the API validates the token audience against the generated demo app client. There is no environment variable, script option, or CDK context flag that removes browser-facing authentication.
-
-The sample includes deterministic fallback stage logic so the synthetic demo remains testable when model calls are unavailable. Treat fallback-backed evaluation metrics as sample control-flow validation, not as claims about model quality.
+For third-party models, Amazon Bedrock may need to enable the model for the account before the first successful invocation. Anthropic models may also require a first-time-use form. If either the Runtime model or evaluator model is not enabled, live calls or AgentCore Evaluator creation can fail with `AccessDeniedException` mentioning `aws-marketplace:ViewSubscriptions` or `aws-marketplace:Subscribe`.
 
 ## Dependency Reproducibility
 
@@ -78,6 +64,22 @@ For a clean sample deployment, run the end-to-end setup command:
 ```
 
 `setup-demo.sh` runs these phases in order: deploy infrastructure and UI, seed the synthetic data, attach the AgentCore Policy Engine, create or update Cedar policies, switch the Gateway to `ENFORCE`, and verify one allowed and one denied Gateway tool call.
+
+When setup is complete, you'll see the following output with values specific to your deployment:
+
+```bash
+Demo setup complete.
+
+Cloudscape UI: https://xxxxxxxxxxxxxx.cloudfront.net
+API URL:        https://yyyyyyyyyy.execute-api.eu-west-2.amazonaws.com/stage-SeedC6957C61/
+Dashboard:      Dashboard9E4231ED-9dB5FGq6bjbc
+Gateway target: post-trade-tools-55f961d06c0111f1b31e0643a8a3d4a7
+State machine:  arn:aws:states:eu-west-2:123456789123:stateMachine:AgentAssistedTriageControlLayer5064DB8C-Es38JF4Puq1V
+Demo auth:      Cognito Hosted UI enabled
+Hosted UI:      https://post-trade-demo-123456789123-55f961d06c0111f1b31e081075612347.auth.eu-west-2.amazoncognito.com
+```
+
+Visit the Cloudscape UI URL to experience the demo.
 
 The underlying phase scripts are kept intentionally small so you can rerun only the failed or changed phase. Running `deploy.sh` directly does not configure or verify AgentCore Policy, so it requires an explicit acknowledgement; use `setup-demo.sh` for the normal end-to-end path.
 
@@ -96,7 +98,7 @@ Fast-path deploy for frontend-only changes (skips Python venv, runtime ZIP rebui
 
 Only use `deploy-ui.sh` when the changes are limited to `frontend/`. If any of `src/`, `infra/`, `app.py`, `cdk.json`, or `requirements*.txt` have changed, run `./scripts/deploy.sh` instead so CloudFormation picks up the new template and Lambda code.
 
-Run the main demo case:
+If you prefer to use scripts, run the main demo case:
 
 ```bash
 ./scripts/run-case.sh missing_ssi
